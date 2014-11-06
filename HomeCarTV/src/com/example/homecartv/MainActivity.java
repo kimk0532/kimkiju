@@ -1,19 +1,29 @@
 package com.example.homecartv;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -45,36 +55,56 @@ public class MainActivity extends Activity {
 		right = (Button)findViewById(R.id.btnright);
 		wb = (WebView)findViewById(R.id.wb);
 		
-		up.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String message="u";
-				btService.write(message.getBytes());
-			}
-		});
-		down.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String message="d";
-				btService.write(message.getBytes());
-			}
-		});
-		left.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String message="l";
-				btService.write(message.getBytes());
-			}
-		});
-		right.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String message="r";
-				btService.write(message.getBytes());
-			}
-		});
+		wb.getSettings().setJavaScriptEnabled(true);
+		wb.getSettings().setPluginState(PluginState.ON);
+		wb.getSettings().setSupportMultipleWindows(true);
+		wb.loadUrl("http://192.168.0.41:8081/");
+		
+		wb.setWebChromeClient(new WebChromeClient());
+		wb.setWebViewClient(new WebViewClient());
+		
+		btAdapter=BluetoothAdapter.getDefaultAdapter();
+		
+		up.setOnTouchListener(touchButton());
+		down.setOnTouchListener(touchButton());
+		left.setOnTouchListener(touchButton());
+		right.setOnTouchListener(touchButton());
 	}
 
+	private OnTouchListener touchButton() {
+		return new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent mEvent) {
+				if(mEvent.getAction()==MotionEvent.ACTION_UP){ // if left out right buttons are up
+					String message="c";
+					btService.write(message.getBytes());
+					System.out.println("c");
+				}
+				else{
+					if(v.getId()==up.getId()){ // left button is down
+						String message="f";
+						btService.write(message.getBytes());
+						System.out.println("f");
+					}
+					else if(v.getId()==down.getId()){ // right button is down
+						String message="b";
+						btService.write(message.getBytes());
+					}
+					else if(v.getId()==left.getId()){
+						String message="l";
+						btService.write(message.getBytes());
+					}
+					else if(v.getId()==right.getId()){
+						String message="r";
+						btService.write(message.getBytes());
+					}
+				}
+				return false;
+			}
+		};
+	}
+	
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -86,6 +116,22 @@ public class MainActivity extends Activity {
 			if (btService==null) 
 				btService =	new BluetoothService(this,handler);
 		}
+	}
+	
+	@Override
+	public synchronized void onResume() {
+		super.onResume();
+		if (btService!=null) {
+			if (btService.getState() ==BluetoothService.STATE_NONE) {
+				btService.start();
+			}
+		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (btService!=null) btService.stop();
 	}
 	
 	private final Handler handler=new Handler() {
@@ -111,6 +157,27 @@ public class MainActivity extends Activity {
 		}
 	};
 	
+	public void onActivityResult(int requestCode,int resultCode,Intent data) {
+		switch (requestCode) {
+		case RQ_CONNECT_DEVICE:
+			if (resultCode==Activity.RESULT_OK) {
+				String address=data.getExtras().
+					getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+				
+				BluetoothDevice device=btAdapter.getRemoteDevice(address);
+				btService.connect(device);
+			}
+			break;
+		case RQ_ENABLE_BT:
+			if (resultCode==Activity.RESULT_OK) {
+				btService=new BluetoothService(this,handler);
+			} else {
+				Toast.makeText(this,"Bluetooth",Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		}
+	}
+	
 	private void RecSub(final String str) {      
 		handler.post(new Runnable(){
 			public void run() {
@@ -125,19 +192,19 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
-	}	
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item0=menu.add(0,0,0,"아니!");
+		MenuItem item0=menu.add(0,0,0,"BluetoothMenu");
 		item0.setIcon(android.R.drawable.ic_search_category_default);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {			
+		switch (item.getItemId()) {	
 		case 0:
 			Intent serverIntent=new Intent(this,DeviceListActivity.class);
 			startActivityForResult(serverIntent,RQ_CONNECT_DEVICE);
