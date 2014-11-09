@@ -1,6 +1,5 @@
 import java.awt.*;
 
-
 public class Ufo {
 	public static int UFO_ST_DEATH = 0;
 	public static int UFO_ST_ALIVE = 1;

@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class SpaceWarComponent extends JComponent{
-	public static int TIME_SLICE = 100;
+	public static int TIME_SLICE = 30;
 	public static int MAX_STAR = 1000;
 	public static int MAX_UFO = 5;
 	public static int MAX_MISSILE = 5;
