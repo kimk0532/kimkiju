@@ -1,7 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-
+import java.awt.*;
 
 public class SpecialMissile {
 	public static int SM_ST_DEATH = 0;
