@@ -27,64 +27,88 @@ public class MainActivity extends Activity {
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String s = input1.getText().toString();
-				a = Double.parseDouble(s);
-				s = input2.getText().toString();
-				b = Double.parseDouble(s);
-				res = a + b;
-				tv.setText("계산결과 : "+res);
+				String s1 = input1.getText().toString();
+				String s2 = input2.getText().toString();
+				if(!s1.equals("") && !s2.equals("")){
+					a = Double.parseDouble(s1);
+					b = Double.parseDouble(s2);
+					res = a + b;
+					tv.setText("계산결과 : "+res);
+				}
+				else
+					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
 			}
 		});
 		btn = (Button) findViewById(R.id.btnsub);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String s = input1.getText().toString();
-				a = Double.parseDouble(s);
-				s = input2.getText().toString();
-				b = Double.parseDouble(s);
-				res = a - b;
-				tv.setText("계산결과 : "+res);
+				String s1 = input1.getText().toString();
+				String s2 = input2.getText().toString();
+				if(!s1.equals("") && !s2.equals("")){
+					a = Double.parseDouble(s1);
+					b = Double.parseDouble(s2);
+					res = a - b;
+					tv.setText("계산결과 : "+res);
+				}
+				else
+					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
 			}
 		});
 		btn = (Button) findViewById(R.id.btnmul);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String s = input1.getText().toString();
-				a = Double.parseDouble(s);
-				s = input2.getText().toString();
-				b = Double.parseDouble(s);
-				res = a * b;
-				tv.setText("계산결과 : "+res);
+				String s1 = input1.getText().toString();
+				String s2 = input2.getText().toString();
+				if(!s1.equals("") && !s2.equals("")){
+					a = Double.parseDouble(s1);
+					b = Double.parseDouble(s2);
+					res = a * b;
+					tv.setText("계산결과 : "+res);
+				}
+				else
+					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
 			}
 		});
 		btn = (Button) findViewById(R.id.btndiv);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String s = input1.getText().toString();
-				a = Double.parseDouble(s);
-				s = input2.getText().toString();
-				b = Double.parseDouble(s);
-				try {
-					res = a / b;
-				} catch (ArithmeticException e) {
-					Toast.makeText(getApplicationContext(), "0으로 나눌수 없습니다.", Toast.LENGTH_SHORT).show();
+				String s1 = input1.getText().toString();
+				String s2 = input2.getText().toString();
+				if(!s1.equals("") && !s2.equals("")){
+					if(s2.equals("0"))
+							Toast.makeText(getApplicationContext(), "0으로 나눌 수 없습니다!", Toast.LENGTH_SHORT).show();
+					else{
+						a = Double.parseDouble(s1);
+						b = Double.parseDouble(s2);
+						res = a / b;
+						tv.setText("계산결과 : "+res);
+					}
 				}
-				tv.setText("계산결과 : "+res);
+				else
+					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
 			}
 		});
 		btn = (Button) findViewById(R.id.btnmod);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String s = input1.getText().toString();
-				a = Double.parseDouble(s);
-				s = input2.getText().toString();
-				b = Double.parseDouble(s);
-				res = a % b;
-				tv.setText("계산결과 : "+res);
+				String s1 = input1.getText().toString();
+				String s2 = input2.getText().toString();
+				if(!s1.equals("") && !s2.equals("")){
+					if(s2.equals("0"))
+							Toast.makeText(getApplicationContext(), "0으로 나눌 수 없습니다!", Toast.LENGTH_SHORT).show();
+					else{
+						a = Double.parseDouble(s1);
+						b = Double.parseDouble(s2);
+						res = a % b;
+						tv.setText("계산결과 : "+res);
+					}
+				}
+				else
+					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
