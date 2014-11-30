@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setTitle("초간단 계산기");
 		input1 = (EditText) findViewById(R.id.editText1);
 		input2 = (EditText) findViewById(R.id.editText2);
 		tv = (TextView) findViewById(R.id.textView1);
@@ -35,8 +36,10 @@ public class MainActivity extends Activity {
 					res = a + b;
 					tv.setText("계산결과 : "+res);
 				}
-				else
+				else{
 					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
+					tv.setText("계산결과 : ");
+				}
 			}
 		});
 		btn = (Button) findViewById(R.id.btnsub);
@@ -51,8 +54,10 @@ public class MainActivity extends Activity {
 					res = a - b;
 					tv.setText("계산결과 : "+res);
 				}
-				else
+				else{
 					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
+					tv.setText("계산결과 : ");
+				}
 			}
 		});
 		btn = (Button) findViewById(R.id.btnmul);
@@ -67,8 +72,10 @@ public class MainActivity extends Activity {
 					res = a * b;
 					tv.setText("계산결과 : "+res);
 				}
-				else
+				else{
 					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
+					tv.setText("계산결과 : ");
+				}
 			}
 		});
 		btn = (Button) findViewById(R.id.btndiv);
@@ -78,8 +85,10 @@ public class MainActivity extends Activity {
 				String s1 = input1.getText().toString();
 				String s2 = input2.getText().toString();
 				if(!s1.equals("") && !s2.equals("")){
-					if(s2.equals("0"))
-							Toast.makeText(getApplicationContext(), "0으로 나눌 수 없습니다!", Toast.LENGTH_SHORT).show();
+					if(s2.equals("0")){
+						Toast.makeText(getApplicationContext(), "0으로 나눌 수 없습니다!", Toast.LENGTH_SHORT).show();
+						tv.setText("계산결과 : ");
+					}
 					else{
 						a = Double.parseDouble(s1);
 						b = Double.parseDouble(s2);
@@ -87,8 +96,10 @@ public class MainActivity extends Activity {
 						tv.setText("계산결과 : "+res);
 					}
 				}
-				else
+				else{
 					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
+					tv.setText("계산결과 : ");
+				}
 			}
 		});
 		btn = (Button) findViewById(R.id.btnmod);
@@ -98,8 +109,10 @@ public class MainActivity extends Activity {
 				String s1 = input1.getText().toString();
 				String s2 = input2.getText().toString();
 				if(!s1.equals("") && !s2.equals("")){
-					if(s2.equals("0"))
-							Toast.makeText(getApplicationContext(), "0으로 나눌 수 없습니다!", Toast.LENGTH_SHORT).show();
+					if(s2.equals("0")){
+						Toast.makeText(getApplicationContext(), "0으로 나눌 수 없습니다!", Toast.LENGTH_SHORT).show();
+						tv.setText("계산결과 : ");
+					}
 					else{
 						a = Double.parseDouble(s1);
 						b = Double.parseDouble(s2);
@@ -107,10 +120,11 @@ public class MainActivity extends Activity {
 						tv.setText("계산결과 : "+res);
 					}
 				}
-				else
+				else{
 					Toast.makeText(getApplicationContext(), "숫자를 입력하세요!", Toast.LENGTH_SHORT).show();
+					tv.setText("계산결과 : ");
+				}
 			}
 		});
 	}
-
 }
