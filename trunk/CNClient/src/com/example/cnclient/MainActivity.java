@@ -11,6 +11,7 @@ import java.net.Socket;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,8 @@ public class MainActivity extends Activity {
 		startActivity(new Intent(this,Splash.class));
 		et = (EditText)findViewById(R.id.editText1);
 		tv = (TextView)findViewById(R.id.textView1);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
 		Button btn = (Button)findViewById(R.id.button1);
 		btn.setOnClickListener(new View.OnClickListener() {
 			
@@ -47,8 +50,8 @@ public class MainActivity extends Activity {
 	}
 	
 	private class TCPclient implements Runnable{
-		private static final String serverIP = "192.168.0.20";
-		private static final int serverPort = 5555;
+		private static final String serverIP = "121.136.100.69";
+		private static final int serverPort = 9000;
 		private String msg;
 		
 		public TCPclient(String _msg){

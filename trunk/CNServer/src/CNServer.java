@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class CNServer implements Runnable {
 	
-	public static final int ServerPort = 7777;
+	public static final int ServerPort = 9000;
 	public static final String ServerIP = "192.168.0.20";
 	
 	@Override
