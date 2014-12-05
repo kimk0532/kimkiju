@@ -47,6 +47,15 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		btn = (Button)findViewById(R.id.button2);
+		btn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(MainActivity.this, Map.class);
+				startActivity(i);
+			}
+		});
 	}
 	
 	private class TCPclient implements Runnable{
