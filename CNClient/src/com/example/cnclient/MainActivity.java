@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private class TCPclient implements Runnable{
-		private static final String serverIP = "121.136.100.69";
+		private static final String serverIP = "121.136.117.96";
 		private static final int serverPort = 9000;
 		private String msg;
 		
